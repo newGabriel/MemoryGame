@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+    <head>
+        <title>Memory Game</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+        <style>
+            img{
+                width: 100%;
+            }
+            
+            #grid{
+                width: 50%;
+                margin-left: 25%;
+            }
+            .word{
+                position: relative;
+                text-align: center;
+                margin-bottom: 50%;
+                margin-top: 50%;
+            }
+            h1{
+                text-align: center;
+            }
+            #end{
+               color: blue;
+               display: none;
+            }
+            #btn-end{
+                display:block;
+                margin-left: 46%;
+                margin-right: 46%;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Momory Game</h1>
+        <div class="conteiner" id="grid">
+            <div class="row" >
+                <div class="col">
+                    <img src="images/card.jpg" id="img00" onclick="verify('00')">
+                    <p id="00" class="word"></p>
+                </div>
+                <div class="col">
+                    <img src="images/card.jpg" id="img01" onclick="verify('01')">
+                    <p id="01" class="word"></p>
+                </div>
+                <div class="col">
+                    <img src="images/card.jpg" id="img02" onclick="verify('02')">
+                    <p id="02" class="word"></p>
+                </div>
+                <div class="col">
+                    <img src="images/card.jpg" id="img03" onclick="verify('03')">
+                    <p id="03" class="word"></p>
+                </div>
+                <div class="col">
+                    <img src="images/card.jpg" id="img04" onclick="verify('04')">
+                    <p id="04" class="word"></p>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col">
+                    <img src="images/card.jpg" id="img10" onclick="verify('10')">
+                    <p id="10" class="word"></p>
+                </div>
+                <div class="col">
+                    <img src="images/card.jpg" id="img11" onclick="verify('11')">
+                    <p id="11" class="word"></p>
+                </div>
+                <div class="col">
+                    <img src="images/card.jpg" id="img12" onclick="verify('12')">
+                    <p id="12" class="word"></p>
+                </div>
+                <div class="col">
+                    <img src="images/card.jpg" id="img13" onclick="verify('13')">
+                    <p id="13" class="word"></p>
+                </div>
+                <div class="col">
+                    <img src="images/card.jpg" id="img14" onclick="verify('14')">
+                    <p id="14" class="word"></p>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col">
+                    <img src="images/card.jpg" id="img20" onclick="verify('20')">
+                    <p id="20" class="word"></p>
+                </div>
+                <div class="col">
+                    <img src="images/card.jpg" id="img21" onclick="verify('21')">
+                    <p id="21" class="word"></p>
+                </div>
+                <div class="col">
+                    <img src="images/card.jpg" id="img22" onclick="verify('22')">
+                    <p id="22" class="word"></p>
+                </div>
+                <div class="col">
+                    <img src="images/card.jpg" id="img23" onclick="verify('23')">
+                    <p id="23" class="word"></p>
+                </div>
+                <div class="col">
+                    <img src="images/card.jpg" id="img24" onclick="verify('24')">
+                    <p id="24" class="word"></p>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col">
+                    <img src="images/card.jpg" id="img30" onclick="verify('30')">
+                    <p id="30" class="word"></p>
+                </div>
+                <div class="col">
+                    <img src="images/card.jpg" id="img31" onclick="verify('31')">
+                    <p id="31" class="word"></p>
+                </div>
+                <div class="col">
+                    <img src="images/card.jpg" id="img32" onclick="verify('32')">
+                    <p id="32" class="word"></p>
+                </div>
+                <div class="col">
+                    <img src="images/card.jpg" id="img33" onclick="verify('33')">
+                    <p id="33" class="word"></p>
+                </div>
+                <div class="col">
+                    <img src="images/card.jpg" id="img34" onclick="verify('34')">
+                    <p id="34" class="word"></p>
+                </div>
+            </div>
+        </div>
+        <div id="end">
+            <h1 >Congratulations</h1>
+            <a href="index.html" id="btn-end"  class="btn btn-primary">try again</a>
+        </div>
+    </body>
+    <script>
+        
+        var f = 0;
+        var words = ["Sluggish","Clever","Slow","Fast","Reckless","Prudent",
+            "Stubborn","Obedient","Ugly","beautiful","Fearful","Brave","Unwise","Intelligent"
+            ,"cool","Boring","Unworthy","Worthy","Inelegant","Elegant"];
+        
+        var M = new Map();
+        
+        var aux;
+        var aid;
+        
+        var acer = 0;
+        
+        for(let i=0;i<words.length;i+=2){
+            M.set(words[i],words[i+1]);
+            M.set(words[i+1],words[i]);
+        }
+        
+        function shuffle(a) {
+            var j, x, i;
+            for (i = a.length - 1; i > 0; i--) {
+                j = Math.floor(Math.random() * (i + 1));
+                x = a[i];
+                a[i] = a[j];
+                a[j] = x;
+            }
+            return a;
+        }
+        function verify(a){
+            let el= document.getElementById("img"+a);
+            el.style.display = "none";
+            el= document.getElementById(a+'');
+            el.style.display = "block";
+            if(f==0){
+                f++;
+                aux = el;
+                aid = a;
+            }
+            else{
+                f--;
+                if(M.get(aux.textContent)!=el.textContent){
+                    setTimeout(()=>{
+                    el.style.display = "none";
+                    el= document.getElementById("img"+a);
+                    el.style.display = "block";
+                    aux.style.display = "none";
+                    aux = document.getElementById("img"+aid);
+                    aux.style.display = "block";}
+                    ,500);
+                }
+                else{
+                    acer++;
+                    if(acer==(words.length/2)){
+                        let end = document.getElementById("end");
+                        end.style.display="block";
+                    }
+                }
+            }
+            
+        }
+        words = shuffle(words);
+        //console.log(words);
+        for(let i=0;i<4;i++){
+            for(let j=0;j<5;j++){
+                let el = document.getElementById((i+'')+(j+''));
+                el.textContent = words[i*5+j];
+                el.style.display = "none";
+            }
+        }
+    </script>
+</html>
